@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Agronegócio no Paraná | Potência e Inovação</title>
+    <title>O Agronegócio no Paraná</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -13,9 +13,8 @@
             --bg-secondary: #121814;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
-            --primary: #52b788;
-            --primary-light: #74c69d;
-            --accent: #2d6a4f;
+            --primary: #2ecc71;
+            --primary-light: #27ae60;
             --border-radius: 16px;
             --shadow: 0 10px 30px rgba(0,0,0,0.5);
             --font-base: 16px;
@@ -28,7 +27,6 @@
             --text-secondary: #444444;
             --primary: #1b4332;
             --primary-light: #2d6a4f;
-            --accent: #52b788;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
@@ -45,6 +43,7 @@
             font-size: var(--font-base);
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
+            padding-top: 80px;
         }
 
         /* Blindagem do Modo de Contraste */
@@ -62,43 +61,44 @@
             font-weight: bold !important;
         }
 
-        /* Header Layout com Acessibilidade no Canto Superior Direito */
+        /* Header com Acessibilidade Destacada no Canto Superior Direito */
         header {
-            display: table;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 20px;
+            height: 80px;
             background: var(--bg-secondary);
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            z-index: 1000;
+            padding: 0 30px;
         }
 
-        .header-cell-title {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: left;
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
-        .header-cell-acc {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: right;
-        }
-
-        @media (max-width: 768px) {
-            header, .header-cell-title, .header-cell-acc {
-                display: block;
-                width: 100%;
-                text-align: center;
-                margin-bottom: 15px;
-            }
+        /* Centralização Absoluta do Título da Página */
+        .main-title-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 0 20px;
         }
 
         h1 {
-            font-size: clamp(24px, 4vw, 36px);
+            font-size: clamp(28px, 5vw, 46px);
             font-weight: 800;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
-        /* Menu de Acessibilidade em Destaque */
+        /* Menu Suspenso de Acessibilidade */
         .acc-dropdown {
             position: relative;
             display: inline-block;
@@ -113,25 +113,30 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: var(--shadow);
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
         }
 
         .acc-trigger:hover {
             background: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         .acc-content {
             display: none;
             position: absolute;
             right: 0;
+            top: 100%;
+            margin-top: 10px;
             background: var(--bg-secondary);
-            min-width: 250px;
+            min-width: 265px;
             box-shadow: var(--shadow);
             border-radius: var(--border-radius);
             padding: 15px;
-            z-index: 1000;
-            text-align: left;
             border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        [data-theme="light"] .acc-content {
+            border: 1px solid rgba(0,0,0,0.08);
         }
 
         .acc-dropdown:hover .acc-content,
@@ -145,14 +150,14 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             color: var(--text-primary);
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 8px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
             text-align: center;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         [data-theme="light"] .acc-item {
@@ -162,17 +167,17 @@
 
         .acc-item:hover {
             background: var(--primary);
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
-        /* Container Principal */
+        /* Layout Main */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px 60px 20px;
         }
 
-        /* Imagem Destacada e Créditos */
+        /* Seção Imagem Destaque */
         .image-section {
             text-align: center;
             margin-bottom: 40px;
@@ -180,7 +185,7 @@
 
         .featured-image {
             width: 100%;
-            max-height: 500px;
+            max-height: 520px;
             object-fit: cover;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -189,121 +194,145 @@
         .photo-credits {
             font-size: 14px;
             color: var(--text-secondary);
-            margin-top: 8px;
+            margin-top: 10px;
             font-style: italic;
         }
 
-        /* Seções de Texto e Copy */
+        /* Copywriting / Textos em Destaque */
         .highlight-text {
-            font-size: clamp(18px, 3vw, 24px);
+            font-size: clamp(20px, 3.5vw, 26px);
             font-weight: 600;
             text-align: center;
             color: var(--primary);
-            margin: 30px 0;
+            margin: 40px 0;
             line-height: 1.4;
         }
 
         .section-card {
             background: var(--bg-secondary);
             border-radius: var(--border-radius);
-            padding: 30px;
+            padding: 35px;
             box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        /* Grid do Mapa e Regiões */
+        .section-card h2 {
+            font-size: clamp(20px, 3vw, 28px);
+            margin-bottom: 20px;
+        }
+
+        /* Grid Multifuncional */
         .grid-two {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-            border-collapse: separate;
-            border-spacing: 20px 0;
-            margin: 20px -20px 0 -20px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
         }
 
         .col {
-            display: table-cell;
-            vertical-align: top;
-            width: 50%;
+            flex: 1;
         }
 
-        @media (max-width: 768px) {
-            .grid-two, .col {
-                display: block;
-                width: 100%;
-                margin: 0;
+        @media (max-width: 900px) {
+            .grid-two {
+                flex-direction: column;
             }
             .col {
-                margin-bottom: 30px;
+                width: 100%;
             }
         }
 
-        /* Regiões Estilizadas */
+        /* Estilização Avançada do Mapa Geográfico do PR */
+        .map-svg-container {
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        [data-theme="light"] .map-svg-container {
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .map-region {
+            transition: fill 0.3s, opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .map-region:hover {
+            fill: #f4a261 !important;
+            opacity: 0.95;
+        }
+
+        /* Regiões de Texto */
         .region-list {
-            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .region-card {
-            background: rgba(255,255,255,0.02);
-            border-left: 4px solid var(--primary);
-            padding: 12px 20px;
-            margin-bottom: 10px;
-            border-radius: 0 8px 8px 0;
+            background: rgba(255,255,255,0.03);
+            border-left: 5px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 0;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         [data-theme="light"] .region-card {
-            background: rgba(0,0,0,0.01);
+            background: rgba(0,0,0,0.02);
+        }
+
+        .region-card.active-focus {
+            transform: translateX(5px);
+            background: rgba(244, 162, 97, 0.1);
+            border-left-color: #f4a261;
         }
 
         .region-name {
             font-weight: 800;
             color: var(--primary);
-            display: inline-block;
             margin-right: 5px;
         }
 
         .source-footer {
             font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 15px;
+            margin-top: 25px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* VLibras Widget Space Fix */
-        .vlib-active {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999999;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
     </style>
 </head>
-<body>
+<body id="context-scope">
 
     <header>
-        <div class="header-cell-title">
-            <h1>O Agronegócio no Paraná</h1>
-        </div>
-        <div class="header-cell-acc">
+        <div class="header-container">
             <div class="acc-dropdown">
-                <button class="acc-trigger" aria-label="Menu de Acessibilidade">♿ Acessibilidade</button>
+                <button class="acc-trigger" aria-label="Menu de Acessibilidade">♿ Opções de Acessibilidade</button>
                 <div class="acc-content">
                     <button class="acc-item" onclick="alterarFonte(1)">Aumentar Letra (A+)</button>
                     <button class="acc-item" onclick="alterarFonte(-1)">Diminuir Letra (A-)</button>
                     <button class="acc-item" onclick="ouvirTexto()">Escutar o Site (🔊)</button>
                     <button class="acc-item" onclick="pararAudio()">Parar Áudio (⏹️)</button>
-                    <button class="acc-item" onclick="ativarLibras()">Ativar VLibras (🧏)</button>
-                    <button class="acc-item" onclick="alternarTema()">Alternar Modo Claro/Escuro</button>
+                    <button class="acc-item" onclick="alternarTema()">Mudar para Modo Claro / Escuro</button>
                 </div>
             </div>
         </div>
     </header>
 
+    <div class="main-title-container">
+        <h1>O Agronegócio no Paraná</h1>
+    </div>
+
     <main class="container" id="conteudo-principal">
         
         <section class="image-section">
-            <img src="https://www.parana.pr.gov.br/sites/default/arquivos_restritos/files/imagem/migrados/galeria/60526/Trigo_035.jpg" alt="Plantação de trigo dourada no Paraná sob o céu limpo" class="featured-image">
+            <img src="https://www.parana.pr.gov.br/sites/default/arquivos_restritos/files/imagem/migrados/galeria/60526/Trigo_035.jpg" alt="Plantação de trigo sob o céu do Paraná" class="featured-image">
             <div class="photo-credits">Foto: Jaelson Lucas</div>
         </section>
 
@@ -312,48 +341,39 @@
         </p>
 
         <section class="section-card">
-            <p>Segundo dados da CONAB (Levantamento 05/2026), o Paraná é o segundo maior produtor de soja no Brasil, com uma produção expressiva de <strong>21,55 milhões de toneladas</strong>.</p>
+            <p style="font-size: 1.15rem; line-height: 1.7;">Segundo dados da CONAB (levantamento 05/2026), o Paraná é o <strong>segundo maior produtor de soja no Brasil</strong>, com uma produção expressiva de <strong>21,55 milhões de toneladas</strong>.</p>
         </section>
 
         <section class="section-card">
-            <h2>Mas o Paraná vai muito além disso: cada região é forte em algo</h2>
-            <br>
+            <h2 style="text-align: center; margin-bottom: 35px;">Mas o Paraná vai muito além disso: cada região é forte em algo</h2>
+            
             <div class="grid-two">
-                <div class="col">
-                    <!-- Mapa SVG Interativo Otimizado do PR Dividido em Regiões -->
-                    <svg viewBox="0 0 400 300" class="featured-image" style="background: rgba(255,255,255,0.02); padding: 10px;">
-                        <rect width="400" height="300" fill="none"/>
-                        <!-- Noroeste -->
-                        <path d="M40 60 L140 40 L160 90 L80 130 Z" fill="#1b4332" stroke="#52b788" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Noroeste')"/>
-                        <text x="85" y="85" fill="#fff" font-size="12" font-weight="bold">Noroeste</text>
-                        
-                        <!-- Norte -->
-                        <path d="M140 40 L260 50 L280 110 L160 90 Z" fill="#2d6a4f" stroke="#52b788" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Norte')"/>
-                        <text x="200" y="75" fill="#fff" font-size="12" font-weight="bold">Norte</text>
-                        
-                        <!-- Oeste -->
-                        <path d="M30 120 L80 130 L120 200 L40 220 Z" fill="#40916c" stroke="#52b788" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Oeste')"/>
-                        <text x="60" y="170" fill="#fff" font-size="12" font-weight="bold">Oeste</text>
-                        
-                        <!-- Centro-Sul -->
-                        <path d="M160 90 L240 110 L220 210 L120 200 Z" fill="#52b788" stroke="#0a0f0d" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Centro Sul')"/>
-                        <text x="150" y="150" fill="#fff" font-size="12" font-weight="bold">Centro-Sul</text>
-                        
-                        <!-- Campos Gerais -->
-                        <path d="M260 50 L340 80 L310 180 L240 110 Z" fill="#74c69d" stroke="#0a0f0d" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Campos Gerais')"/>
-                        <text x="265" y="115" fill="#000" font-size="11" font-weight="bold">Campos Gerais</text>
-                        
-                        <!-- Sudoeste -->
-                        <path d="M40 220 L120 200 L150 260 L80 270 Z" fill="#95d5b2" stroke="#0a0f0d" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Sudoeste')"/>
-                        <text x="80" y="240" fill="#000" font-size="11" font-weight="bold">Sudoeste</text>
-                        
-                        <!-- Curitiba e Região Metropolitana -->
-                        <path d="M310 180 L380 160 L390 220 L300 230 Z" fill="#b7e4c7" stroke="#0a0f0d" stroke-width="2" style="cursor:pointer;" onclick="focarRegiao('Curitiba')"/>
-                        <text x="320" y="200" fill="#000" font-size="10" font-weight="bold">RMC</text>
+                <div class="col map-svg-container">
+                    <svg viewBox="0 0 500 350" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                        <path class="map-region" d="M60 80 L180 50 L200 130 L110 170 Z" fill="#1b4332" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Noroeste')"/>
+                        <text x="110" y="105" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Noroeste</text>
+
+                        <path class="map-region" d="M180 50 L360 70 L340 160 L200 130 Z" fill="#2d6a4f" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Norte')"/>
+                        <text x="260" y="110" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Norte</text>
+
+                        <path class="map-region" d="M30 170 L110 170 L150 250 L40 260 Z" fill="#40916c" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Oeste')"/>
+                        <text x="70" y="215" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Oeste</text>
+
+                        <path class="map-region" d="M200 130 L300 160 L270 270 L150 250 Z" fill="#52b788" stroke="#121814" stroke-width="3" onclick="focarRegiao('Centro-Sul')"/>
+                        <text x="195" y="200" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Centro-Sul</text>
+
+                        <path class="map-region" d="M360 70 L450 110 L400 220 L300 160 L340 160 Z" fill="#74c69d" stroke="#121814" stroke-width="3" onclick="focarRegiao('Campos Gerais')"/>
+                        <text x="355" y="135" fill="#000000" font-weight="bold" font-size="13" pointer-events="none">Campos Gerais</text>
+
+                        <path class="map-region" d="M40 260 L150 250 L180 320 L90 330 Z" fill="#95d5b2" stroke="#121814" stroke-width="3" onclick="focarRegiao('Sudoeste')"/>
+                        <text x="85" y="295" fill="#000000" font-weight="bold" font-size="13" pointer-events="none">Sudoeste</text>
+
+                        <path class="map-region" d="M400 220 L480 190 L490 270 L390 280 Z" fill="#d8f3dc" stroke="#121814" stroke-width="3" onclick="focarRegiao('Curitiba')"/>
+                        <text x="410" y="250" fill="#000000" font-weight="bold" font-size="12" pointer-events="none">RMC</text>
                     </svg>
                 </div>
                 <div class="col">
-                    <div class="region-list" id="lista-regioes"></div>
+                    <div class="region-list" id="regioes-dinamicas"></div>
                     <div class="source-footer">Fonte das informações: RPC</div>
                 </div>
             </div>
@@ -361,7 +381,6 @@
 
     </main>
 
-    <!-- VLibras Component Integration Setup -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -371,70 +390,68 @@
 
     <script>
         let tamanhoFonteAtual = 16;
-        const bodyElement = document.documentElement;
-        let sinteseVoz = null;
+        const bodyContext = document.getElementById('context-scope');
+        let vozAtiva = null;
 
-        // Renderização Dinâmica via Matriz de Objetos conforme Item 4
-        const dadosRegioes = [
-            { id: "Noroeste", nome: "Noroeste", fortes: "Mandioca e laranja." },
-            { id: "Oeste", nome: "Oeste", fortes: "Frangos e suínos." },
-            { id: "Sudoeste", nome: "Sudoeste", fortes: "Leite." },
-            { id: "Norte", nome: "Norte", fortes: "Milho e soja." },
-            { id: "Campos Gerais", nome: "Campos Gerais", fortes: "Feijão." },
-            { id: "Centro Sul", nome: "Centro Sul", fortes: "Trigo." },
-            { id: "Curitiba", nome: "Curitiba e Região Metropolitana", fortes: "Hortifruti." }
+        // Renderização Dinâmica por Objeto (Item 4 do Guia de Integridade)
+        const mapeamentoRegioes = [
+            { id: "Noroeste", nome: "Noroeste", forte: "Mandioca e laranja." },
+            { id: "Oeste", nome: "Oeste", forte: "Frangos e suínos." },
+            { id: "Sudoeste", nome: "Sudoeste", forte: "Leite." },
+            { id: "Norte", nome: "Norte", forte: "Milho e soja." },
+            { id: "Campos Gerais", nome: "Campos Gerais", forte: "Feijão." },
+            { id: "Centro-Sul", nome: "Centro sul", forte: "Trigo." },
+            { id: "Curitiba", nome: "Curitiba e Região metropolitana", forte: "Hortifruti." }
         ];
 
-        function carregarRegioes() {
-            const container = document.getElementById('lista-regioes');
-            container.innerHTML = dadosRegioes.map(reg => `
-                <div class="region-card" id="card-${reg.id}">
-                    <span class="region-name">${reg.nome}:</span> ${reg.fortes}
+        function inicializarLista() {
+            const container = document.getElementById('regioes-dinamicas');
+            container.innerHTML = mapeamentoRegioes.map(item => `
+                <div class="region-card" id="card-${item.id}">
+                    <span class="region-name">${item.nome} :</span> ${item.forte}
                 </div>
             `).join('');
         }
 
         function focarRegiao(id) {
-            // Remove realces anteriores
-            document.querySelectorAll('.region-card').forEach(el => el.style.borderLeftColor = 'var(--primary)');
-            const alvo = document.getElementById(`card-${id}`);
-            if(alvo) {
-                alvo.style.borderLeftColor = '#f4a261';
-                alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                ouvirTrecho(`${id}, forças produtivas: ${alvo.innerText}`);
+            document.querySelectorAll('.region-card').forEach(c => c.classList.remove('active-focus'));
+            const cardAlvo = document.getElementById(`card-${id}`);
+            if (cardAlvo) {
+                cardAlvo.classList.add('active-focus');
+                cardAlvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                ouvirTrecho(cardAlvo.innerText);
             }
         }
 
-        function alterarFonte(direcao) {
-            let novaFonte = tamanhoFonteAtual + (direcao * 2);
+        function alterarFonte(passo) {
+            let novaFonte = tamanhoFonteAtual + (passo * 2);
             if (novaFonte >= 12 && novaFonte <= 24) {
                 tamanhoFonteAtual = novaFonte;
-                document.body.style.setProperty('--font-base', tamanhoFonteAtual + 'pt');
+                bodyContext.style.setProperty('--font-base', tamanhoFonteAtual + 'pt');
             }
         }
 
         function alternarTema() {
-            const temaAtual = bodyElement.getAttribute('data-theme');
-            if (temaAtual === 'light') {
-                bodyElement.removeAttribute('data-theme');
+            if (bodyContext.getAttribute('data-theme') === 'light') {
+                bodyContext.removeAttribute('data-theme');
             } else {
-                bodyElement.setAttribute('data-theme', 'light');
+                bodyContext.setAttribute('data-theme', 'light');
             }
         }
 
         function ouvirTexto() {
             pararAudio();
-            const textoTodo = document.getElementById('conteudo-principal').innerText;
-            sinteseVoz = new SpeechSynthesisUtterance(textoTodo);
-            sinteseVoz.lang = 'pt-BR';
-            window.speechSynthesis.speak(sinteseVoz);
+            const leituraConteudo = document.getElementById('conteudo-principal').innerText;
+            vozAtiva = new SpeechSynthesisUtterance(leituraConteudo);
+            vozAtiva.lang = 'pt-BR';
+            window.speechSynthesis.speak(vozAtiva);
         }
 
-        function ouvirTrecho(texto) {
+        function ouvirTrecho(conteudoTexto) {
             pararAudio();
-            sinteseVoz = new SpeechSynthesisUtterance(texto);
-            sinteseVoz.lang = 'pt-BR';
-            window.speechSynthesis.speak(sinteseVoz);
+            vozAtiva = new SpeechSynthesisUtterance(conteudoTexto);
+            vozAtiva.lang = 'pt-BR';
+            window.speechSynthesis.speak(vozAtiva);
         }
 
         function pararAudio() {
@@ -443,23 +460,21 @@
             }
         }
 
-        function activarLibras() {
-            // Trigger nativo ou alerta do plugin integrado
-            alert("O widget do VLibras foi ativado no canto inferior da sua tela.");
-        }
-
-        // Script externo oficial do VLibras carregado assincronamente para manter integridade
+        // Script de Carregamento Assíncrono Verificado para o VLibras Funcional
         (function() {
-            var s = document.createElement('script');
-            s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-            s.async = true;
-            s.onload = function() {
-                new window.VLibras.Plugin();
+            var scriptVLibras = document.createElement('script');
+            scriptVLibras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+            scriptVLibras.async = true;
+            scriptVLibras.onload = function() {
+                if (window.VLibras) {
+                    new window.VLibras.Plugin();
+                }
             };
-            document.head.appendChild(s);
+            document.head.appendChild(scriptVLibras);
         })();
 
-        window.onload = carregarRegioes;
+        window.onload = inicializarLista;
     </script>
 </body>
 </html>
+  
