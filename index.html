@@ -61,7 +61,7 @@
             font-weight: bold !important;
         }
 
-        /* Header com Acessibilidade Destacada no Canto Superior Direito */
+        /* Header e Menu Suspenso de Acessibilidade */
         header {
             position: fixed;
             top: 0;
@@ -83,22 +83,6 @@
             align-items: center;
         }
 
-        /* Centralização Absoluta do Título da Página */
-        .main-title-container {
-            text-align: center;
-            margin: 40px 0;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-size: clamp(28px, 5vw, 46px);
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-        }
-
-        /* Menu Suspenso de Acessibilidade */
         .acc-dropdown {
             position: relative;
             display: inline-block;
@@ -157,7 +141,7 @@
             font-weight: 600;
             font-size: 14px;
             text-align: center;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s;
         }
 
         [data-theme="light"] .acc-item {
@@ -170,14 +154,29 @@
             color: #ffffff !important;
         }
 
-        /* Layout Main */
+        /* Centralização Absoluta do Título */
+        .main-title-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 46px);
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px 60px 20px;
         }
 
-        /* Seção Imagem Destaque */
+        /* Imagem e Créditos */
         .image-section {
             text-align: center;
             margin-bottom: 40px;
@@ -198,7 +197,7 @@
             font-style: italic;
         }
 
-        /* Copywriting / Textos em Destaque */
+        /* Elementos de Copywriting */
         .highlight-text {
             font-size: clamp(20px, 3.5vw, 26px);
             font-weight: 600;
@@ -217,11 +216,12 @@
         }
 
         .section-card h2 {
-            font-size: clamp(20px, 3vw, 28px);
+            font-size: clamp(22px, 3vw, 28px);
             margin-bottom: 20px;
+            color: var(--primary);
         }
 
-        /* Grid Multifuncional */
+        /* Grid Multifuncional do Mapa */
         .grid-two {
             display: flex;
             gap: 40px;
@@ -241,7 +241,7 @@
             }
         }
 
-        /* Estilização Avançada do Mapa Geográfico do PR */
+        /* Container do Mapa */
         .map-svg-container {
             background: rgba(255,255,255,0.02);
             border-radius: var(--border-radius);
@@ -267,7 +267,7 @@
             opacity: 0.95;
         }
 
-        /* Regiões de Texto */
+        /* Listagem de Regiões */
         .region-list {
             display: flex;
             flex-direction: column;
@@ -306,6 +306,35 @@
             letter-spacing: 1.5px;
             font-weight: 600;
         }
+
+        /* Grid de Iniciativas Sustentáveis */
+        .sustainability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .initiative-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        [data-theme="light"] .initiative-item {
+            background: rgba(0,0,0,0.01);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .initiative-item h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 <body id="context-scope">
@@ -319,7 +348,7 @@
                     <button class="acc-item" onclick="alterarFonte(-1)">Diminuir Letra (A-)</button>
                     <button class="acc-item" onclick="ouvirTexto()">Escutar o Site (🔊)</button>
                     <button class="acc-item" onclick="pararAudio()">Parar Áudio (⏹️)</button>
-                    <button class="acc-item" onclick="alternarTema()">Mudar para Modo Claro / Escuro</button>
+                    <button class="acc-item" onclick="alternarTema()">Alternar Modo Claro</button>
                 </div>
             </div>
         </div>
@@ -379,6 +408,16 @@
             </div>
         </section>
 
+        <section class="section-card">
+            <h2>Sustentabilidade no Campo</h2>
+            <p style="margin-bottom: 20px;">A atividade agropecuária é essencial para a produção de alimentos, mas também pode causar impactos ambientais quando não é realizada de forma sustentável.</p>
+            
+            <h3 style="font-size: 20px; margin-top: 25px; margin-bottom: 10px; color: var(--primary);">Iniciativas do Paraná em prol de um agro sustentável</h3>
+            <p>O Paraná vem investindo em ações que mostram que é possível produzir alimentos com responsabilidade ambiental. Nos últimos anos, o estado tem incentivado práticas que preservam os recursos naturais, reduzem os impactos da produção agrícola e fortalecem o desenvolvimento sustentável no campo. Conheça algumas dessas iniciativas:</p>
+
+            <div class="sustainability-grid" id="sustentabilidade-dinamica"></div>
+        </section>
+
     </main>
 
     <div vw class="enabled">
@@ -393,7 +432,7 @@
         const bodyContext = document.getElementById('context-scope');
         let vozAtiva = null;
 
-        // Renderização Dinâmica por Objeto (Item 4 do Guia de Integridade)
+        // Arrays de Objetos para Componentização Dinâmica (Item 4)
         const mapeamentoRegioes = [
             { id: "Noroeste", nome: "Noroeste", forte: "Mandioca e laranja." },
             { id: "Oeste", nome: "Oeste", forte: "Frangos e suínos." },
@@ -404,11 +443,31 @@
             { id: "Curitiba", nome: "Curitiba e Região metropolitana", forte: "Hortifruti." }
         ];
 
-        function inicializarLista() {
-            const container = document.getElementById('regioes-dinamicas');
-            container.innerHTML = mapeamentoRegioes.map(item => `
+        const iniciativasSustentaveis = [
+            { titulo: "🌱 Plantio Direto", desc: "O Paraná é um dos estados que mais utilizam o plantio direto, uma técnica que mantém a cobertura vegetal sobre o solo após a colheita. Essa prática ajuda a diminuir a erosão, conservar a umidade, melhorar a fertilidade da terra e reduzir os impactos causados pelo preparo do solo." },
+            { titulo: "🌾 Integração Lavoura-Pecuária-Floresta (ILPF)", desc: "Esse sistema reúne o cultivo de lavouras, a criação de animais e o plantio de árvores em uma mesma área. Além de aumentar a produtividade, a ILPF contribui para a recuperação do solo, favorece a biodiversidade e reduz a emissão de gases de efeito estufa." },
+            { titulo: "💧 Conservação da Água e do Solo", desc: "Diversos programas estaduais incentivam técnicas que evitam a degradação do solo e protegem os recursos hídricos. Medidas como a construção de terraços e o cultivo em nível ajudam a reduzir a erosão, preservar rios e garantir água para as futuras gerações." },
+            { titulo: "🌳 Proteção de Nascentes", desc: "A recuperação e a preservação de nascentes são fundamentais para manter a disponibilidade de água no meio rural. No Paraná, projetos de recuperação ambiental ajudam a proteger essas áreas por meio do cercamento, do reflorestamento e da conservação da vegetação nativa." },
+            { titulo: "🐞 Manejo Integrado de Pragas (MIP)", desc: "O Manejo Integrado de Pragas incentiva o monitoramento constante das lavouras para que o controle de insetos seja feito apenas quando realmente necessário. Essa estratégia reduz o uso de defensivos agrícolas, diminui os impactos ambientais e contribui para uma produção mais equilibrada." },
+            { titulo: "♻️ Biogás e Biometano", desc: "O estado também investe na produção de energia renovável a partir dos resíduos da agropecuária. O biogás e o biometano transformam materiais que antes seriam descartados em energia limpa, reduzindo a poluição e promovendo o aproveitamento sustentável dos recursos." },
+            { titulo: "🌍 Plano ABC+ Paraná", desc: "O Plano ABC+ incentiva práticas voltadas para uma agricultura de baixa emissão de carbono. Entre suas ações estão a recuperação de áreas degradadas, o fortalecimento do plantio direto, o uso de bioinsumos e o manejo sustentável das propriedades rurais, contribuindo para um agro mais eficiente e sustentável." }
+        ];
+
+        function inicializarConteudo() {
+            // Regiões
+            const containerRegioes = document.getElementById('regioes-dinamicas');
+            containerRegioes.innerHTML = mapeamentoRegioes.map(item => `
                 <div class="region-card" id="card-${item.id}">
                     <span class="region-name">${item.nome} :</span> ${item.forte}
+                </div>
+            `).join('');
+
+            // Sustentabilidade
+            const containerSust = document.getElementById('sustentabilidade-dinamica');
+            containerSust.innerHTML = iniciativasSustentaveis.map(item => `
+                <div class="initiative-item">
+                    <h3>${item.titulo}</h3>
+                    <p style="font-size: 14px; line-height: 1.5; color: var(--text-secondary);">${item.desc}</p>
                 </div>
             `).join('');
         }
@@ -460,8 +519,10 @@
             }
         }
 
-        // Script de Carregamento Assíncrono Verificado para o VLibras Funcional
-        (function() {
+        // Script de Carregamento e Inicialização Completa do VLibras
+        window.addEventListener('DOMContentLoaded', () => {
+            inicializarConteudo();
+            
             var scriptVLibras = document.createElement('script');
             scriptVLibras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
             scriptVLibras.async = true;
@@ -471,10 +532,8 @@
                 }
             };
             document.head.appendChild(scriptVLibras);
-        })();
-
-        window.onload = inicializarLista;
+        });
     </script>
 </body>
 </html>
-  
+       
