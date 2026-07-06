@@ -337,9 +337,9 @@
             <h3 style="font-size: 20px; margin-top: 25px; margin-bottom: 10px; color: var(--primary);">Iniciativas do Paraná em prol de um agro sustentável</h3>
             <p>O Paraná vem investindo em ações que mostram que é possível produzir alimentos com responsabilidade ambiental. Nos últimos anos, o estado tem incentivado práticas que preservam os recursos naturais, reduzem os impactos da produção agrícola e fortalecem o desenvolvimento sustentável no campo. Clique sobre os títulos abaixo para conhecer cada iniciativa:</p>
 
-            <div class="accordion-container" id="acordeao-sustentabilidade"></div>
+            <div class="accordion-container" id="acordeao-sustentabilidade"><
             
-            <div class="source-footer">Fonte das informações: RPC</div>
+
         </section>
 
     </main>
@@ -432,19 +432,19 @@
             }
         }
 
-        // Script de Carregamento e Inicialização Completa do VLibras
+        // Script de Carregamento e Inicialização Completa do Libras
         window.addEventListener('DOMContentLoaded', () => {
             inicializarAcordeao();
             
             var scriptVLibras = document.createElement('script');
-            scriptVLibras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+            scriptVLibras.src = 'https://libras.gov.br/app/libras-plugin.js';
             scriptVLibras.async = true;
             scriptVLibras.onload = function() {
-                if (window.VLibras) {
-                    new window.VLibras.Plugin();
+                if (window.Libras) {
+                    new window.Libras.Plugin();
                 }
             };
-            document.head.appendChild(scriptVLibras);
+            document.head.appendChild(scriptLibras);
         });
     </script>
 </body>
