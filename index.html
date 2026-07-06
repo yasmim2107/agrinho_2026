@@ -221,81 +221,67 @@
             color: var(--primary);
         }
 
-        /* Grid Multifuncional do Mapa */
-        .grid-two {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .col {
-            flex: 1;
-        }
-
-        @media (max-width: 900px) {
-            .grid-two {
-                flex-direction: column;
-            }
-            .col {
-                width: 100%;
-            }
-        }
-
-        /* Container do Mapa */
-        .map-svg-container {
-            background: rgba(255,255,255,0.02);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        [data-theme="light"] .map-svg-container {
-            background: rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .map-region {
-            transition: fill 0.3s, opacity 0.3s;
-            cursor: pointer;
-        }
-
-        .map-region:hover {
-            fill: #f4a261 !important;
-            opacity: 0.95;
-        }
-
-        /* Listagem de Regiões */
-        .region-list {
+        /* Acordeão Interativo para Iniciativas */
+        .accordion-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-top: 25px;
         }
 
-        .region-card {
-            background: rgba(255,255,255,0.03);
-            border-left: 5px solid var(--primary);
-            padding: 15px 20px;
-            border-radius: 0 12px 12px 0;
-            transition: transform 0.2s, background-color 0.2s;
+        .accordion-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: background-color 0.2s;
         }
 
-        [data-theme="light"] .region-card {
-            background: rgba(0,0,0,0.02);
+        [data-theme="light"] .accordion-item {
+            background: rgba(0,0,0,0.01);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        .region-card.active-focus {
-            transform: translateX(5px);
-            background: rgba(244, 162, 97, 0.1);
-            border-left-color: #f4a261;
-        }
-
-        .region-name {
-            font-weight: 800;
+        .accordion-header {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--primary);
-            margin-right: 5px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .accordion-header::after {
+            content: '▼';
+            font-size: 12px;
+            transition: transform 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .accordion-item.active .accordion-header::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out, padding 0.2s ease-out;
+            padding: 0 20px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .accordion-item.active .accordion-body {
+            max-height: 300px; /* Limite seguro para transição suave */
+            padding-bottom: 20px;
         }
 
         .source-footer {
@@ -305,35 +291,6 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 600;
-        }
-
-        /* Grid de Iniciativas Sustentáveis */
-        .sustainability-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .initiative-item {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        [data-theme="light"] .initiative-item {
-            background: rgba(0,0,0,0.01);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .initiative-item h3 {
-            font-size: 18px;
-            color: var(--primary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
     </style>
 </head>
@@ -374,48 +331,15 @@
         </section>
 
         <section class="section-card">
-            <h2 style="text-align: center; margin-bottom: 35px;">Mas o Paraná vai muito além disso: cada região é forte em algo</h2>
-            
-            <div class="grid-two">
-                <div class="col map-svg-container">
-                    <svg viewBox="0 0 500 350" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
-                        <path class="map-region" d="M60 80 L180 50 L200 130 L110 170 Z" fill="#1b4332" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Noroeste')"/>
-                        <text x="110" y="105" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Noroeste</text>
-
-                        <path class="map-region" d="M180 50 L360 70 L340 160 L200 130 Z" fill="#2d6a4f" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Norte')"/>
-                        <text x="260" y="110" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Norte</text>
-
-                        <path class="map-region" d="M30 170 L110 170 L150 250 L40 260 Z" fill="#40916c" stroke="#2ecc71" stroke-width="3" onclick="focarRegiao('Oeste')"/>
-                        <text x="70" y="215" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Oeste</text>
-
-                        <path class="map-region" d="M200 130 L300 160 L270 270 L150 250 Z" fill="#52b788" stroke="#121814" stroke-width="3" onclick="focarRegiao('Centro-Sul')"/>
-                        <text x="195" y="200" fill="#ffffff" font-weight="bold" font-size="14" pointer-events="none">Centro-Sul</text>
-
-                        <path class="map-region" d="M360 70 L450 110 L400 220 L300 160 L340 160 Z" fill="#74c69d" stroke="#121814" stroke-width="3" onclick="focarRegiao('Campos Gerais')"/>
-                        <text x="355" y="135" fill="#000000" font-weight="bold" font-size="13" pointer-events="none">Campos Gerais</text>
-
-                        <path class="map-region" d="M40 260 L150 250 L180 320 L90 330 Z" fill="#95d5b2" stroke="#121814" stroke-width="3" onclick="focarRegiao('Sudoeste')"/>
-                        <text x="85" y="295" fill="#000000" font-weight="bold" font-size="13" pointer-events="none">Sudoeste</text>
-
-                        <path class="map-region" d="M400 220 L480 190 L490 270 L390 280 Z" fill="#d8f3dc" stroke="#121814" stroke-width="3" onclick="focarRegiao('Curitiba')"/>
-                        <text x="410" y="250" fill="#000000" font-weight="bold" font-size="12" pointer-events="none">RMC</text>
-                    </svg>
-                </div>
-                <div class="col">
-                    <div class="region-list" id="regioes-dinamicas"></div>
-                    <div class="source-footer">Fonte das informações: RPC</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-card">
             <h2>Sustentabilidade no Campo</h2>
             <p style="margin-bottom: 20px;">A atividade agropecuária é essencial para a produção de alimentos, mas também pode causar impactos ambientais quando não é realizada de forma sustentável.</p>
             
             <h3 style="font-size: 20px; margin-top: 25px; margin-bottom: 10px; color: var(--primary);">Iniciativas do Paraná em prol de um agro sustentável</h3>
-            <p>O Paraná vem investindo em ações que mostram que é possível produzir alimentos com responsabilidade ambiental. Nos últimos anos, o estado tem incentivado práticas que preservam os recursos naturais, reduzem os impactos da produção agrícola e fortalecem o desenvolvimento sustentável no campo. Conheça algumas dessas iniciativas:</p>
+            <p>O Paraná vem investindo em ações que mostram que é possível produzir alimentos com responsabilidade ambiental. Nos últimos anos, o estado tem incentivado práticas que preservam os recursos naturais, reduzem os impactos da produção agrícola e fortalecem o desenvolvimento sustentável no campo. Clique sobre os títulos abaixo para conhecer cada iniciativa:</p>
 
-            <div class="sustainability-grid" id="sustentabilidade-dinamica"></div>
+            <div class="accordion-container" id="acordeao-sustentabilidade"></div>
+            
+            <div class="source-footer">Fonte das informações: RPC</div>
         </section>
 
     </main>
@@ -432,19 +356,9 @@
         const bodyContext = document.getElementById('context-scope');
         let vozAtiva = null;
 
-        // Arrays de Objetos para Componentização Dinâmica (Item 4)
-        const mapeamentoRegioes = [
-            { id: "Noroeste", nome: "Noroeste", forte: "Mandioca e laranja." },
-            { id: "Oeste", nome: "Oeste", forte: "Frangos e suínos." },
-            { id: "Sudoeste", nome: "Sudoeste", forte: "Leite." },
-            { id: "Norte", nome: "Norte", forte: "Milho e soja." },
-            { id: "Campos Gerais", nome: "Campos Gerais", forte: "Feijão." },
-            { id: "Centro-Sul", nome: "Centro sul", forte: "Trigo." },
-            { id: "Curitiba", nome: "Curitiba e Região metropolitana", forte: "Hortifruti." }
-        ];
-
+        // Dados via Array de Objetos para Geração Dinâmica dos Acordeões
         const iniciativasSustentaveis = [
-            { titulo: "🌱 Plantio Direto", desc: "O Paraná é um dos estados que mais utilizam o plantio direto, uma técnica que mantém a cobertura vegetal sobre o solo após a colheita. Essa prática ajuda a diminuir a erosão, conservar a umidade, melhorar a fertilidade da terra e reduzir os impactos causados pelo preparo do solo." },
+            { titulo: "🌱 Plantio Direto", desc: "O Paraná é um dos estados que mais utilizam o plantio direto, uma técnica que mantém a cobertura vegetal sobre o solo após a colheita. Essa prática ajuda a diminuir a erosão, conservar a umidade, melhorar a fertility da terra e reduzir os impactos causados pelo preparo do solo." },
             { titulo: "🌾 Integração Lavoura-Pecuária-Floresta (ILPF)", desc: "Esse sistema reúne o cultivo de lavouras, a criação de animais e o plantio de árvores em uma mesma área. Além de aumentar a produtividade, a ILPF contribui para a recuperação do solo, favorece a biodiversidade e reduz a emissão de gases de efeito estufa." },
             { titulo: "💧 Conservação da Água e do Solo", desc: "Diversos programas estaduais incentivam técnicas que evitam a degradação do solo e protegem os recursos hídricos. Medidas como a construção de terraços e o cultivo em nível ajudam a reduzir a erosão, preservar rios e garantir água para as futuras gerações." },
             { titulo: "🌳 Proteção de Nascentes", desc: "A recuperação e a preservação de nascentes são fundamentais para manter a disponibilidade de água no meio rural. No Paraná, projetos de recuperação ambiental ajudam a proteger essas áreas por meio do cercamento, do reflorestamento e da conservação da vegetação nativa." },
@@ -453,33 +367,32 @@
             { titulo: "🌍 Plano ABC+ Paraná", desc: "O Plano ABC+ incentiva práticas voltadas para uma agricultura de baixa emissão de carbono. Entre suas ações estão a recuperação de áreas degradadas, o fortalecimento do plantio direto, o uso de bioinsumos e o manejo sustentável das propriedades rurais, contribuindo para um agro mais eficiente e sustentável." }
         ];
 
-        function inicializarConteudo() {
-            // Regiões
-            const containerRegioes = document.getElementById('regioes-dinamicas');
-            containerRegioes.innerHTML = mapeamentoRegioes.map(item => `
-                <div class="region-card" id="card-${item.id}">
-                    <span class="region-name">${item.nome} :</span> ${item.forte}
-                </div>
-            `).join('');
-
-            // Sustentabilidade
-            const containerSust = document.getElementById('sustentabilidade-dinamica');
-            containerSust.innerHTML = iniciativasSustentaveis.map(item => `
-                <div class="initiative-item">
-                    <h3>${item.titulo}</h3>
-                    <p style="font-size: 14px; line-height: 1.5; color: var(--text-secondary);">${item.desc}</p>
+        function inicializarAcordeao() {
+            const container = document.getElementById('acordeao-sustentabilidade');
+            container.innerHTML = iniciativasSustentaveis.map((item, idx) => `
+                <div class="accordion-item" id="item-${idx}">
+                    <button class="accordion-header" onclick="alternarItem(${idx})">${item.titulo}</button>
+                    <div class="accordion-body">
+                        <p>${item.desc}</p>
+                    </div>
                 </div>
             `).join('');
         }
 
-        function focarRegiao(id) {
-            document.querySelectorAll('.region-card').forEach(c => c.classList.remove('active-focus'));
-            const cardAlvo = document.getElementById(`card-${id}`);
-            if (cardAlvo) {
-                cardAlvo.classList.add('active-focus');
-                cardAlvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                ouvirTrecho(cardAlvo.innerText);
-            }
+        function alternarItem(index) {
+            const itens = document.querySelectorAll('.accordion-item');
+            itens.forEach((item, idx) => {
+                if (idx === index) {
+                    const isActive = item.classList.contains('active');
+                    item.classList.toggle('active', !isActive);
+                    if (!isActive) {
+                        const texto = item.querySelector('.accordion-body p').innerText;
+                        ouvirTrecho(texto);
+                    }
+                } else {
+                    item.classList.remove('active');
+                }
+            });
         }
 
         function alterarFonte(passo) {
@@ -521,7 +434,7 @@
 
         // Script de Carregamento e Inicialização Completa do VLibras
         window.addEventListener('DOMContentLoaded', () => {
-            inicializarConteudo();
+            inicializarAcordeao();
             
             var scriptVLibras = document.createElement('script');
             scriptVLibras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
@@ -536,4 +449,3 @@
     </script>
 </body>
 </html>
-       
