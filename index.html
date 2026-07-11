@@ -154,7 +154,7 @@
             color: #ffffff !important;
         }
 
-        /* Centralização Absoluta do Título */
+        /* Centralização Absoluta do Título - Usando em para aumentar junto com o body */
         .main-title-container {
             text-align: center;
             margin: 40px 0;
@@ -162,7 +162,7 @@
         }
 
         h1 {
-            font-size: clamp(28px, 5vw, 46px);
+            font-size: 2.2em;
             font-weight: 800;
             color: var(--primary);
             text-transform: uppercase;
@@ -191,7 +191,7 @@
         }
 
         .photo-credits {
-            font-size: 14px;
+            font-size: 0.85em;
             color: var(--text-secondary);
             margin-top: 10px;
             font-style: italic;
@@ -199,7 +199,7 @@
 
         /* Elementos de Copywriting */
         .highlight-text {
-            font-size: clamp(20px, 3.5vw, 26px);
+            font-size: 1.5em;
             font-weight: 600;
             text-align: center;
             color: var(--primary);
@@ -216,9 +216,35 @@
         }
 
         .section-card h2 {
-            font-size: clamp(22px, 3vw, 28px);
+            font-size: 1.6em;
             margin-bottom: 20px;
             color: var(--primary);
+        }
+
+        /* Listagem de Regiões (Informações mantidas) */
+        .region-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .region-card {
+            background: rgba(255,255,255,0.03);
+            border-left: 5px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 0;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        [data-theme="light"] .region-card {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .region-name {
+            font-weight: 800;
+            color: var(--primary);
+            margin-right: 5px;
         }
 
         /* Acordeão Interativo para Iniciativas */
@@ -247,7 +273,7 @@
             background: none;
             border: none;
             padding: 20px;
-            font-size: 18px;
+            font-size: 1.1em;
             font-weight: 600;
             color: var(--primary);
             text-align: left;
@@ -275,17 +301,17 @@
             transition: max-height 0.2s ease-out, padding 0.2s ease-out;
             padding: 0 20px;
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 0.95em;
             line-height: 1.6;
         }
 
         .accordion-item.active .accordion-body {
-            max-height: 300px; /* Limite seguro para transição suave */
+            max-height: 400px;
             padding-bottom: 20px;
         }
 
         .source-footer {
-            font-size: 12px;
+            font-size: 0.75em;
             color: var(--text-secondary);
             margin-top: 25px;
             text-transform: uppercase;
@@ -327,19 +353,25 @@
         </p>
 
         <section class="section-card">
-            <p style="font-size: 1.15rem; line-height: 1.7;">Segundo dados da CONAB (levantamento 05/2026), o Paraná é o <strong>segundo maior produtor de soja no Brasil</strong>, com uma produção expressiva de <strong>21,55 milhões de toneladas</strong>.</p>
+            <p style="font-size: 1.15em; line-height: 1.7;">Segundo dados da CONAB (levantamento 05/2026), o Paraná é o <strong>segundo maior produtor de soja no Brasil</strong>, com uma produção expressiva de <strong>21,55 milhões de toneladas</strong>.</p>
+        </section>
+
+        <section class="section-card">
+            <h2>Força Produtiva por Região</h2>
+            <p>Mas o Paraná vai muito além disso: cada região é forte em algo. Veja a especialidade de cada localidade:</p>
+            
+            <div class="region-list" id="regioes-dinamicas"></div>
+            <div class="source-footer">Fonte das informações: RPC</div>
         </section>
 
         <section class="section-card">
             <h2>Sustentabilidade no Campo</h2>
             <p style="margin-bottom: 20px;">A atividade agropecuária é essencial para a produção de alimentos, mas também pode causar impactos ambientais quando não é realizada de forma sustentável.</p>
             
-            <h3 style="font-size: 20px; margin-top: 25px; margin-bottom: 10px; color: var(--primary);">Iniciativas do Paraná em prol de um agro sustentável</h3>
+            <h3 style="font-size: 1.25em; margin-top: 25px; margin-bottom: 10px; color: var(--primary);">Iniciativas do Paraná em prol de um agro sustentável</h3>
             <p>O Paraná vem investindo em ações que mostram que é possível produzir alimentos com responsabilidade ambiental. Nos últimos anos, o estado tem incentivado práticas que preservam os recursos naturais, reduzem os impactos da produção agrícola e fortalecem o desenvolvimento sustentável no campo. Clique sobre os títulos abaixo para conhecer cada iniciativa:</p>
 
-            <div class="accordion-container" id="acordeao-sustentabilidade"><
-            
-
+            <div class="accordion-container" id="acordeao-sustentabilidade"></div>
         </section>
 
     </main>
@@ -356,10 +388,21 @@
         const bodyContext = document.getElementById('context-scope');
         let vozAtiva = null;
 
-        // Dados via Array de Objetos para Geração Dinâmica dos Acordeões
+        // Dados das regiões mantidos e preservados
+        const mapeamentoRegioes = [
+            { nome: "Noroeste", forte: "Mandioca e laranja." },
+            { nome: "Oeste", forte: "Frangos e suínos." },
+            { nome: "Sudoeste", forte: "Leite." },
+            { nome: "Norte", forte: "Milho e soja." },
+            { nome: "Campos gerais", forte: "Feijão." },
+            { nome: "Centro sul", forte: "Trigo." },
+            { nome: "Curitiba e Regiao metropolitana", forte: "Hortifruti." }
+        ];
+
+        // Traduzido "fertility" para "fertilidade" conforme solicitado
         const iniciativasSustentaveis = [
-            { titulo: "🌱 Plantio Direto", desc: "O Paraná é um dos estados que mais utilizam o plantio direto, uma técnica que mantém a cobertura vegetal sobre o solo após a colheita. Essa prática ajuda a diminuir a erosão, conservar a umidade, melhorar a fertility da terra e reduzir os impactos causados pelo preparo do solo." },
-            { titulo: "🌾 Integração Lavoura-Pecuária-Floresta (ILPF)", desc: "Esse sistema reúne o cultivo de lavouras, a criação de animais e o plantio de árvores em uma mesma área. Além de aumentar a produtividade, a ILPF contribui para a recuperação do solo, favorece a biodiversidade e reduz a emissão de gases de efeito estufa." },
+            { titulo: "🌱 Plantio Direto", desc: "O Paraná é um dos estados que mais utilizam o plantio direto, uma técnica que mantém a cobertura vegetal sobre o solo após a colheita. Essa prática ajuda a diminuir a erosão, conservar a umidade, melhorar a fertilidade da terra e reduzir os impactos causados pelo preparo do solo." },
+            { titulo: "🌾 Integração Lavoura-Pecuária-Floresta (ILPF)", desc: "Esse sistema reúne o cultivo de lavouras, a criação de animais e o plantio de árvores em uma mesma area. Além de aumentar a produtividade, a ILPF contribui para a recuperação do solo, favorece a biodiversidade e reduz a emissão de gases de efeito estufa." },
             { titulo: "💧 Conservação da Água e do Solo", desc: "Diversos programas estaduais incentivam técnicas que evitam a degradação do solo e protegem os recursos hídricos. Medidas como a construção de terraços e o cultivo em nível ajudam a reduzir a erosão, preservar rios e garantir água para as futuras gerações." },
             { titulo: "🌳 Proteção de Nascentes", desc: "A recuperação e a preservação de nascentes são fundamentais para manter a disponibilidade de água no meio rural. No Paraná, projetos de recuperação ambiental ajudam a proteger essas áreas por meio do cercamento, do reflorestamento e da conservação da vegetação nativa." },
             { titulo: "🐞 Manejo Integrado de Pragas (MIP)", desc: "O Manejo Integrado de Pragas incentiva o monitoramento constante das lavouras para que o controle de insetos seja feito apenas quando realmente necessário. Essa estratégia reduz o uso de defensivos agrícolas, diminui os impactos ambientais e contribui para uma produção mais equilibrada." },
@@ -367,9 +410,18 @@
             { titulo: "🌍 Plano ABC+ Paraná", desc: "O Plano ABC+ incentiva práticas voltadas para uma agricultura de baixa emissão de carbono. Entre suas ações estão a recuperação de áreas degradadas, o fortalecimento do plantio direto, o uso de bioinsumos e o manejo sustentável das propriedades rurais, contribuindo para um agro mais eficiente e sustentável." }
         ];
 
-        function inicializarAcordeao() {
-            const container = document.getElementById('acordeao-sustentabilidade');
-            container.innerHTML = iniciativasSustentaveis.map((item, idx) => `
+        function inicializarConteudo() {
+            // Renderização das Regiões
+            const containerRegioes = document.getElementById('regioes-dinamicas');
+            containerRegioes.innerHTML = mapeamentoRegioes.map(item => `
+                <div class="region-card">
+                    <span class="region-name">${item.nome} :</span> ${item.forte}
+                </div>
+            `).join('');
+
+            // Renderização das Iniciativas (Acordeão)
+            const containerSust = document.getElementById('acordeao-sustentabilidade');
+            containerSust.innerHTML = iniciativasSustentaveis.map((item, idx) => `
                 <div class="accordion-item" id="item-${idx}">
                     <button class="accordion-header" onclick="alternarItem(${idx})">${item.titulo}</button>
                     <div class="accordion-body">
@@ -432,20 +484,22 @@
             }
         }
 
-        // Script de Carregamento e Inicialização Completa do Libras
+        // Script de Carregamento e Inicialização Completa do VLibras
         window.addEventListener('DOMContentLoaded', () => {
-            inicializarAcordeao();
+            inicializarConteudo();
             
             var scriptVLibras = document.createElement('script');
-            scriptVLibras.src = 'https://libras.gov.br/app/libras-plugin.js';
+            scriptVLibras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
             scriptVLibras.async = true;
             scriptVLibras.onload = function() {
-                if (window.Libras) {
-                    new window.Libras.Plugin();
+                if (window.VLibras) {
+                    new window.VLibras.Plugin();
                 }
             };
-            document.head.appendChild(scriptLibras);
+            document.head.appendChild(scriptVLibras);
         });
     </script>
 </body>
 </html>
+           
+  
